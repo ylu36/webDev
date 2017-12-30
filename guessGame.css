@@ -1,5 +1,6 @@
 body {
   background-color: #232323;
+  margin: 0;
 }
 #stripe {
   background: white;
@@ -8,6 +9,9 @@ body {
   color:black;
 }
 
+.selected {
+  background-color: blue;
+}
 .square {
   width: 30%;
   background-color: purple;
@@ -18,7 +22,9 @@ body {
 
 h1, h3 {
   color: white;
-  margin: auto;
+  text-align: center;
+  margin: 0;
+  background: steelblue;
 }
 .container {
   margin: 0 auto;
