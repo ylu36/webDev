@@ -35,12 +35,12 @@ function setUpSquares(){
       if(clickedColor == pickedColor) {
           changeColor(clickedColor);
 			    h1.style.background = clickedColor;
-          messageDisplay.textContent = "Correct";
-          resetButton.textContent = "Play Again?";
+          messageDisplay.textContent = "猜对啦";
+          resetButton.textContent = "再来一把？";
       }
       else {
         this.style.backgroundColor = "#232323";
-        messageDisplay.textContent = "Try Again";
+        messageDisplay.textContent = "重来";
       }
     });
   }
@@ -50,7 +50,7 @@ function reset() {
   colors = generateRandomColors(numSquares);
   pickedColor = pickColor();
   colorDisplay.textContent = pickedColor;
-  this.textContent = "New Colors";
+  this.textContent = "新颜色";
   messageDisplay.textContent = "";
   for(var i = 0; i < squares.length; i ++) {
     if(colors[i]) {
