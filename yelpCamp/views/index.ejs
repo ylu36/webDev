@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>HomePage for YelpCamp</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" >
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <div class="container">
+    <header class="jumbotron">
+      <div class="container">
+        <h1> Welcome to YelpCamp! </h1>
+        <p>View amazing campgrounds from all over the world</p>
+        <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add a New Campground</a>
+      </div>
+    </header>
+
+    <br>
+    <a href="/campgrounds">View All Campgrounds</a>
+  </div>
   </body>
 </html>
