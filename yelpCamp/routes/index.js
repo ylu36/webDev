@@ -2,16 +2,19 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/yelp_camp",function(){
-   // mongoose.connection.db.dropDatabase();
+    //mongoose.connection.db.dropDatabase();
 });
 var campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 var Campground = mongoose.model("Campground", campgroundSchema);
 /*
 Campground.create({
-    name: "Granite Hill", image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"
+    name: "Granite Hill",
+    image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg",
+    description: "this is a campground"
 }, function(err, campground){
     if(err)
         console.log("error");
@@ -50,7 +53,8 @@ router.get('/campgrounds', function(req, res, next) {
 router.post('/campgrounds', function (req, res, next){
     var name = req.body.name;
     var image = req.body.image;
-    var newCampground = {name: name, image: image};
+    var desc = req.body.description;
+    var newCampground = {name: name, image: image, description: desc};
     //campgrounds.push(newCampground);
     Campground.create(newCampground, function(err, newlyCreated){
         if(err) console.log(err);
@@ -62,5 +66,16 @@ router.post('/campgrounds', function (req, res, next){
 
 router.get('/campgrounds/new', function(req, res, next) {
         res.render('new');
+});
+
+router.get('/campgrounds/:id', function(req, res, next) {
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err) console.log(err);
+        else {
+            res.render('show', {campground:foundCampground});
+        }
+
+
+    });
 });
 module.exports = router;
