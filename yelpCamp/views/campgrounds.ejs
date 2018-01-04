@@ -1,25 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>YelpCamp</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-</head>
-<body>
-    <div class = "container">
-        <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-            <% campgrounds.forEach(function(campground){ %>
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                    <img src="<%= campground.image %>">
-                    <div class="caption">
-                        <h4><%= campground.name %></h4>
-                    </div>
+<% include partials/header %>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1> Welcome to YelpCamp! </h1>
+            <p>View amazing campgrounds from all over the world</p>
+            <a class="btn btn-primary btn-lg" href="/campgrounds/new">Add a New Campground</a>
+        </div>
+    </header>
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% campgrounds.forEach(function(campground){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src="<%= campground.image %>">
+                <div class="caption">
+                    <h4><%= campground.name %></h4>
                 </div>
             </div>
-            <% }); %>
         </div>
-        <br>
-        <a href="/">Go Back</a>
+        <% }); %>
+    </div>
+    <br>
+    <a href="/campgrounds">View All Campgrounds</a>
+    <br>
+    <a href="/">Go Back</a>
     </div>
 
 </body>
