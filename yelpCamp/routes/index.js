@@ -19,21 +19,20 @@ var campgrounds = [
 ];
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   console.log("server started...");
   res.render('index');
 });
 
-router.get('/campgrounds', function(req, res, next) {
-    // res.render('campgrounds', {campgrounds: campgrounds});
+router.get('/campgrounds', function(req, res) {
     Campground.find({}, function(err, allCampground){
         if(err) console.log(err);
         else
-            res.render('campgrounds', {campgrounds: allCampground});
+            res.render('campgrounds/campgrounds', {campgrounds: allCampground});
     });
 });
 
-router.post('/campgrounds', function (req, res, next){
+router.post('/campgrounds', function (req, res){
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
@@ -47,15 +46,26 @@ router.post('/campgrounds', function (req, res, next){
 });
 
 router.get('/campgrounds/new', function(req, res, next) {
-        res.render('new');
+        res.render('campgrounds/new');
 });
 
-router.get('/campgrounds/:id', function(req, res, next) {
+router.get('/campgrounds/:id', function(req, res) {
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err) console.log(err);
         else {
-            res.render('show', {campground:foundCampground});
+            res.render('campgrounds/show', {campground:foundCampground});
         }
     });
+});
+
+//comment route
+router.get('/campgrounds/:id/comments/new', function(req, res) {
+    Campground.findById(req.params.id, function(err, campground){
+        if(err) console.log(err);
+        else {
+            res.render('comments/new', {campground:campground});
+        }
+    });
+
 });
 module.exports = router;
