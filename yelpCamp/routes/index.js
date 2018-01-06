@@ -11,6 +11,11 @@ var express = require('express'),
 mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
 seedDB();
 
+router.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
 router.get("/", function(req, res){
     res.render("index");
 });
@@ -34,7 +39,7 @@ router.get("/campgrounds", function(req, res){
         if(err){
             console.log(err);
         } else {
-            res.render("campgrounds/index",{campgrounds:allCampgrounds});
+            res.render("campgrounds/index",{campgrounds:allCampgrounds, currentUser: req.user});
         }
     });
 });
