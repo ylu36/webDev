@@ -10,7 +10,7 @@ var campgroundSchema = new mongoose.Schema({
         }
     ]
 }, {usePushEach: true});
-var Campground = mongoose.model("Campground", campgroundSchema);
+
 /*
 Campground.create({
     name: "Granite Hill",
@@ -24,4 +24,4 @@ Campground.create({
     }
 });
 */
-module.exports = Campground;
+module.exports = mongoose.model("Campground", campgroundSchema);
