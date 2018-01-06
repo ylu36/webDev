@@ -1,19 +1,44 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+var express = require('express'),
+    app         = express(),
+    bodyParser  = require("body-parser"),
+    mongoose    = require("mongoose"),
+    passport    = require('passport'),
+    LocalStrategy = require('passport-local'),
+    Campground  = require("./models/campground"),
+    Comment     = require("./models/comment"),
+    User        = require('./models/user'),
+    seedDB      = require("./seeds");
 
-var index = require('./routes/index');
-var users = require('./models/user');
+var IndexRoute = require('./routes/index'),
+    CommentRoute = require('./routes/comments'),
+    CampgroundRoute = require('./routes/campgrounds');
 
-var app = express();
-
-// view engine setup
-app.set('view engine', 'ejs');
-
-app.use(bodyParser.json());
+mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
 app.use(express.static(__dirname+"/public"));
-app.use('/', index);
-app.use('/users', users);
+seedDB();
+
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret: "Once upon a time",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
+app.use("/", IndexRoute);
+app.use("/campgrounds", CampgroundRoute);
+app.use("/campgrounds/:id/comments", CommentRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
