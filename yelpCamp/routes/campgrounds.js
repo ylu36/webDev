@@ -41,7 +41,7 @@ router.get("/new", isLoggedIn, function(req, res){
 });
 
 // SHOW - shows more info about one campground
-router.get("/:id", isLoggedIn, function(req, res){
+router.get("/:id", function(req, res){
     //find the campground with provided ID
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
         if(err){
@@ -72,6 +72,17 @@ Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, u
         }
         else {
             res.redirect("/campgrounds/"+req.params.id);
+        }
+    });
+});
+
+// DESTROY CAMPGROUND ROUTE
+router.delete("/:id", function(req, res){
+    Campground.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            res.redirect("/campgrounds");
+        } else {
+            res.redirect("/campgrounds");
         }
     });
 });
