@@ -17,3 +17,7 @@ a {
 .thumbnail .caption-full {
   padding: 9px;
 }
+
+.nav-username{
+  text-transform:capitalize;
+}

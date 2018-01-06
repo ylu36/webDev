@@ -11,15 +11,6 @@ var express = require('express'),
 mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
 seedDB();
 
-router.use(function(req, res, next){
-    res.locals.currentUser = req.user;
-    next();
-});
-
-router.get("/", function(req, res){
-    res.render("index");
-});
-
 // PASSPORT CONFIGURATION
 router.use(require("express-session")({
     secret: "Once again Rusty wins cutest dog!",
@@ -32,6 +23,15 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+router.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
+router.get("/", function(req, res){
+    res.render("index");
+});
+
 //INDEX - show all campgrounds
 router.get("/campgrounds", function(req, res){
     // Get all campgrounds from DB
@@ -39,7 +39,7 @@ router.get("/campgrounds", function(req, res){
         if(err){
             console.log(err);
         } else {
-            res.render("campgrounds/index",{campgrounds:allCampgrounds, currentUser: req.user});
+            res.render("campgrounds/index",{campgrounds:allCampgrounds});
         }
     });
 });
