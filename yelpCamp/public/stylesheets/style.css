@@ -6,6 +6,11 @@ a {
   color: #00B7FF;
 }
 
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .thumbnail img {
   width: 100%;
 }
